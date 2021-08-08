@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
   });
 
   if (!category) {
-    res.status(404).json('no category founc!');
+    res.status(404).json('no category found!');
   } else {
     res.status(200).json(category);
   }
