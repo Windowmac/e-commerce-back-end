@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+
   const category = await Category.findByPk(req.params.id, {
     include: [{ model: Product }],
   }).catch((err) => {
@@ -27,10 +28,15 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const newCategory = await Category.create(req.body).catch((err) => {
-    res.status(400).json(err);
-  });
-  res.status(201).json(newCategory);
+  if(req.body.category_name.length){
+    const newCategory = await Category.create(req.body).catch((err) => {
+      res.status(400).json(err);
+    });
+    res.status(201).json(newCategory);
+  } else {
+    res.status(404).json('no category entered!');
+  }
+
 });
 
 router.put('/:id', async (req, res) => {
